@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Party Cube Conference - Control Panel</title>
+  <link rel="stylesheet" href="css/control.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img class="header-title" src="assets/Party Cube Conference Title No BG.png" alt="Party Cube Conference">
+      <p class="subtitle">Control Panel</p>
+    </header>
+
+    <!-- Player Data -->
+    <section class="panel" id="sheet-config">
+      <h2>Player Data</h2>
+      <div class="form-group">
+        <label for="csv-file">Upload Standings CSV</label>
+        <input type="file" id="csv-file" accept=".csv" onchange="onFileSelected(this)">
+      </div>
+      <div id="sheet-status" class="status"></div>
+      <div id="player-list-preview" class="preview-list"></div>
+    </section>
+
+    <!-- Match Setup -->
+    <section class="panel" id="match-setup">
+      <h2>Match Setup</h2>
+
+      <!-- Game Selection -->
+      <div class="form-group">
+        <label for="game-select">Mario Party Game</label>
+        <select id="game-select" onchange="onGameChange()">
+          <option value="">-- Select Game --</option>
+          <option value="4">Mario Party 4</option>
+          <option value="5">Mario Party 5</option>
+          <option value="6">Mario Party 6</option>
+          <option value="7">Mario Party 7</option>
+          <option value="8">Mario Party 8</option>
+        </select>
+      </div>
+
+      <!-- Player Selection -->
+      <div class="players-grid">
+        <div class="player-slot" data-slot="1">
+          <h3>Player 1</h3>
+          <div class="form-group">
+            <label>Player</label>
+            <select class="player-select" data-slot="1" onchange="onPlayerChange(1)">
+              <option value="">-- Select Player --</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Character</label>
+            <select class="character-select" data-slot="1" onchange="onCharacterChange(1)">
+              <option value="">-- Select Character --</option>
+            </select>
+          </div>
+        </div>
+        <div class="player-slot" data-slot="2">
+          <h3>Player 2</h3>
+          <div class="form-group">
+            <label>Player</label>
+            <select class="player-select" data-slot="2" onchange="onPlayerChange(2)">
+              <option value="">-- Select Player --</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Character</label>
+            <select class="character-select" data-slot="2" onchange="onCharacterChange(2)">
+              <option value="">-- Select Character --</option>
+            </select>
+          </div>
+        </div>
+        <div class="player-slot" data-slot="3">
+          <h3>Player 3</h3>
+          <div class="form-group">
+            <label>Player</label>
+            <select class="player-select" data-slot="3" onchange="onPlayerChange(3)">
+              <option value="">-- Select Player --</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Character</label>
+            <select class="character-select" data-slot="3" onchange="onCharacterChange(3)">
+              <option value="">-- Select Character --</option>
+            </select>
+          </div>
+        </div>
+        <div class="player-slot" data-slot="4">
+          <h3>Player 4</h3>
+          <div class="form-group">
+            <label>Player</label>
+            <select class="player-select" data-slot="4" onchange="onPlayerChange(4)">
+              <option value="">-- Select Player --</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Character</label>
+            <select class="character-select" data-slot="4" onchange="onCharacterChange(4)">
+              <option value="">-- Select Character --</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Board Ban/Pick -->
+      <div class="boards-row">
+        <div class="form-group">
+          <label for="board-ban">Board Ban</label>
+          <select id="board-ban" onchange="onBoardBanChange()">
+            <option value="">-- No Ban --</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="board-pick">Board Pick</label>
+          <select id="board-pick">
+            <option value="">-- Select Board --</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="match-btn-row">
+        <button id="send-match-btn" onclick="sendMatchData()">Send Match Data to Overlay</button>
+        <button class="btn-reset" onclick="resetMatchSetup()">Reset Match Setup</button>
+      </div>
+      <div id="match-status" class="status"></div>
+    </section>
+
+    <!-- Scene Controls -->
+    <section class="panel" id="scene-controls">
+      <h2>Overlay Scene Controls</h2>
+      <button id="open-overlay-btn" onclick="openOverlay()">Open Overlay Window</button>
+      <div id="overlay-status" class="status">Overlay not connected</div>
+
+      <div class="scene-group">
+        <h3>Stats Scene</h3>
+        <div class="btn-grid">
+          <button onclick="triggerAllStats()">Show All Player Stats</button>
+          <button onclick="triggerScene('stats')">Show Match Stats</button>
+        </div>
+      </div>
+
+      <div class="scene-group">
+        <h3>Picks &amp; Bans</h3>
+        <div class="btn-grid">
+          <button onclick="triggerReveal('board-ban')">Reveal Banned Board</button>
+          <button onclick="triggerReveal('board-pick')">Reveal Picked Board</button>
+        </div>
+      </div>
+
+      <div class="scene-group">
+        <h3>Character Reveals</h3>
+        <div class="btn-grid">
+          <button onclick="triggerReveal('char-selecting', 1)">P1: Selecting...</button>
+          <button onclick="triggerReveal('char-reveal', 1)">P1: Reveal Character</button>
+          <button onclick="triggerReveal('char-selecting', 2)">P2: Selecting...</button>
+          <button onclick="triggerReveal('char-reveal', 2)">P2: Reveal Character</button>
+          <button onclick="triggerReveal('char-selecting', 3)">P3: Selecting...</button>
+          <button onclick="triggerReveal('char-reveal', 3)">P3: Reveal Character</button>
+          <button onclick="triggerReveal('char-selecting', 4)">P4: Selecting...</button>
+          <button onclick="triggerReveal('char-reveal', 4)">P4: Reveal Character</button>
+        </div>
+      </div>
+
+      <div class="scene-group">
+        <h3>Transitions</h3>
+        <div class="btn-grid">
+          <button onclick="triggerReveal('match-starting')">Match Starting Soon</button>
+          <button onclick="triggerFadeOut()">Fade to Black</button>
+          <button class="btn-reset" onclick="triggerReset()">Reset Overlay</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Audio Controls -->
+    <section class="panel" id="audio-controls">
+      <h2>Audio</h2>
+      <div class="form-group">
+        <label for="volume-slider">Volume</label>
+        <input type="range" id="volume-slider" min="0" max="100" value="50" oninput="onVolumeChange(this.value)">
+        <span id="volume-display">50%</span>
+      </div>
+      <button id="mute-btn" onclick="toggleMute()">Mute</button>
+    </section>
+  </div>
+
+  <script src="js/gamedata.js"></script>
+  <script src="js/csvloader.js"></script>
+  <script src="js/broadcast.js"></script>
+  <script src="js/control.js"></script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PLC Overlay</title>
+  <link rel="stylesheet" href="css/overlay.css">
+</head>
+<body>
+  <!-- Game-specific Background -->
+  <div id="game-bg"></div>
+
+  <!-- Animated Background -->
+  <div id="animated-bg">
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+    <div class="bg-orb orb-3"></div>
+    <div class="bg-orb orb-4"></div>
+    <div class="bg-orb orb-5"></div>
+    <div class="bg-orb orb-6"></div>
+  </div>
+
+  <!-- All Players Stats Scene -->
+  <div id="scene-stats-all" class="scene hidden">
+    <div class="scene-header">
+      <img class="scene-title" src="assets/Party Cube Conference Title No BG.png" alt="Party Cube Conference">
+      <p class="scene-subtitle">Current Standings</p>
+    </div>
+    <div class="leaderboard" id="leaderboard">
+      <!-- All player rows injected by JS -->
+    </div>
+  </div>
+
+  <!-- Match Stats Scene -->
+  <div id="scene-stats" class="scene hidden">
+    <div class="scene-header">
+      <img class="scene-title" src="assets/Party Cube Conference Title No BG.png" alt="Party Cube Conference">
+      <p class="scene-subtitle">Match Players</p>
+    </div>
+    <div class="stats-grid" id="stats-grid">
+      <!-- Match player cards injected by JS -->
+    </div>
+  </div>
+
+  <!-- Picks & Bans Scene -->
+  <div id="scene-picks" class="scene hidden">
+    <div class="scene-header picks-header">
+      <img class="scene-title" src="assets/Party Cube Conference Title No BG.png" alt="Party Cube Conference">
+    </div>
+
+    <!-- Board Ban Reveal -->
+    <div id="board-ban-reveal" class="board-reveal hidden">
+      <div class="board-reveal-inner">
+        <h2 class="reveal-label">Board Banned</h2>
+        <div class="board-card banned">
+          <img class="board-logo" id="ban-board-logo" src="" alt="">
+          <div class="ban-overlay">
+            <span class="ban-x">&#10005;</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Board Pick Reveal -->
+    <div id="board-pick-reveal" class="board-reveal hidden">
+      <div class="board-reveal-inner">
+        <h2 class="reveal-label pick-label">Board Selected</h2>
+        <div class="board-card picked">
+          <img class="board-logo" id="pick-board-logo" src="" alt="">
+          <div class="pick-glow"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Character Selection Area -->
+    <div id="char-selection" class="char-selection hidden">
+      <div class="char-players-row">
+        <div class="char-player-slot" id="char-slot-1">
+          <h3 class="char-player-name" id="char-name-1"></h3>
+          <div class="char-status" id="char-status-1"></div>
+          <div class="char-image-wrapper" id="char-img-wrapper-1">
+            <img class="char-image" id="char-img-1" src="" alt="">
+          </div>
+        </div>
+        <div class="char-player-slot" id="char-slot-2">
+          <h3 class="char-player-name" id="char-name-2"></h3>
+          <div class="char-status" id="char-status-2"></div>
+          <div class="char-image-wrapper" id="char-img-wrapper-2">
+            <img class="char-image" id="char-img-2" src="" alt="">
+          </div>
+        </div>
+        <div class="char-player-slot" id="char-slot-3">
+          <h3 class="char-player-name" id="char-name-3"></h3>
+          <div class="char-status" id="char-status-3"></div>
+          <div class="char-image-wrapper" id="char-img-wrapper-3">
+            <img class="char-image" id="char-img-3" src="" alt="">
+          </div>
+        </div>
+        <div class="char-player-slot" id="char-slot-4">
+          <h3 class="char-player-name" id="char-name-4"></h3>
+          <div class="char-status" id="char-status-4"></div>
+          <div class="char-image-wrapper" id="char-img-wrapper-4">
+            <img class="char-image" id="char-img-4" src="" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Match Starting Marquee -->
+    <div id="match-starting" class="marquee-container hidden">
+      <div class="marquee-text">Match Starting Soon</div>
+    </div>
+  </div>
+
+  <!-- Fade to Black -->
+  <div id="fade-overlay" class="fade-overlay hidden"></div>
+
+  <!-- Game music (source set dynamically) -->
+  <audio id="audio-music" loop preload="auto"></audio>
+  <!-- Character voice line (source set dynamically) -->
+  <audio id="audio-voice" preload="auto"></audio>
+
+  <script src="js/gamedata.js"></script>
+  <script src="js/broadcast.js"></script>
+  <script src="js/overlay.js"></script>
+</body>
+</html>
