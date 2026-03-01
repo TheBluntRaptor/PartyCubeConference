@@ -79,7 +79,9 @@ function setGameTheme(gameNumber) {
 // --- Scene Management ---
 function hideAllScenes() {
   document.querySelectorAll(".scene").forEach((s) => s.classList.add("hidden"));
+  document.getElementById("board-ban-selecting").classList.add("hidden");
   document.getElementById("board-ban-reveal").classList.add("hidden");
+  document.getElementById("board-pick-selecting").classList.add("hidden");
   document.getElementById("board-pick-reveal").classList.add("hidden");
   document.getElementById("char-selection").classList.add("hidden");
   document.getElementById("match-starting").classList.add("hidden");
@@ -155,10 +157,52 @@ function showStats() {
 }
 
 // --- Picks & Bans ---
+function showBanSelecting() {
+  if (!matchData) return;
+
+  hideAllScenes();
+  document.getElementById("scene-picks").classList.remove("hidden");
+
+  // Player 1 is the one selecting the ban
+  const player = matchData.players.find((p) => p.slot === 1);
+  if (player) {
+    document.getElementById("ban-selecting-icon").src = getPlayerIconPath(player.name);
+    document.getElementById("ban-selecting-name").textContent = player.name;
+  }
+
+  const banSelecting = document.getElementById("board-ban-selecting");
+  banSelecting.classList.add("hidden");
+  void banSelecting.offsetWidth;
+  banSelecting.classList.remove("hidden");
+
+  playMusic();
+}
+
+function showPickSelecting() {
+  if (!matchData) return;
+
+  hideAllScenes();
+  document.getElementById("scene-picks").classList.remove("hidden");
+
+  // Player 4 is the one selecting the pick
+  const player = matchData.players.find((p) => p.slot === 4);
+  if (player) {
+    document.getElementById("pick-selecting-icon").src = getPlayerIconPath(player.name);
+    document.getElementById("pick-selecting-name").textContent = player.name;
+  }
+
+  const pickSelecting = document.getElementById("board-pick-selecting");
+  pickSelecting.classList.add("hidden");
+  void pickSelecting.offsetWidth;
+  pickSelecting.classList.remove("hidden");
+
+  playMusic();
+}
+
 function showBoardBan() {
   if (!matchData || !matchData.bannedBoard) return;
 
-  hideAllScenes();
+  document.getElementById("board-ban-selecting").classList.add("hidden");
   document.getElementById("scene-picks").classList.remove("hidden");
 
   const banReveal = document.getElementById("board-ban-reveal");
@@ -183,6 +227,7 @@ function showBoardBan() {
 function showBoardPick() {
   if (!matchData || !matchData.pickedBoard) return;
 
+  document.getElementById("board-pick-selecting").classList.add("hidden");
   document.getElementById("board-ban-reveal").classList.add("hidden");
   document.getElementById("scene-picks").classList.remove("hidden");
 
@@ -365,8 +410,14 @@ broadcast.on("SCENE_CHANGE", (data) => {
 
 broadcast.on("REVEAL_STEP", (data) => {
   switch (data.step) {
+    case "ban-selecting":
+      showBanSelecting();
+      break;
     case "board-ban":
       showBoardBan();
+      break;
+    case "pick-selecting":
+      showPickSelecting();
       break;
     case "board-pick":
       showBoardPick();

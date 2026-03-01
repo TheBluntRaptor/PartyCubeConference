@@ -530,6 +530,54 @@ body {
   filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.6));
 }
 
+/* Board Selecting Card */
+.selecting-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(180deg, rgba(15, 52, 96, 0.7) 0%, rgba(10, 10, 26, 0.8) 100%);
+  border: 2px solid rgba(233, 69, 96, 0.4);
+  border-radius: 16px;
+  padding: 50px 80px;
+  backdrop-filter: blur(10px);
+}
+
+.ban-selecting-card {
+  border-color: rgba(255, 34, 68, 0.5);
+  box-shadow: 0 0 30px rgba(255, 34, 68, 0.2);
+}
+
+.pick-selecting-card {
+  border-color: rgba(0, 230, 118, 0.5);
+  box-shadow: 0 0 30px rgba(0, 230, 118, 0.2);
+}
+
+.selecting-player-icon {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--primary);
+  box-shadow: 0 0 20px var(--primary-glow);
+  margin-bottom: 20px;
+}
+
+.selecting-player-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--text-white);
+  margin-bottom: 10px;
+}
+
+.selecting-text {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.6rem;
+  color: var(--gold);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
 /* Banned Board Overlay */
 .board-card.banned {
   border: 4px solid var(--ban-red);
