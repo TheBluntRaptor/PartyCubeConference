@@ -9,6 +9,7 @@ let fadeInterval = null;
 // --- Audio ---
 const audioMusic = document.getElementById("audio-music");
 const audioVoice = document.getElementById("audio-voice");
+const audioSfx = document.getElementById("audio-sfx");
 
 function setVolume(vol) {
   audioVolume = vol;
@@ -170,6 +171,12 @@ function showBoardBan() {
   void banReveal.offsetWidth;
   banReveal.classList.remove("hidden");
 
+  // Play board ban sound effect
+  audioSfx.src = "assets/audio/Board Ban Sound.mp3";
+  audioSfx.volume = audioVolume;
+  audioSfx.currentTime = 0;
+  audioSfx.play().catch(() => {});
+
   playMusic();
 }
 
@@ -188,6 +195,12 @@ function showBoardPick() {
   pickReveal.classList.add("hidden");
   void pickReveal.offsetWidth;
   pickReveal.classList.remove("hidden");
+
+  // Play board pick sound effect
+  audioSfx.src = "assets/audio/Board Pick Sound.mp3";
+  audioSfx.volume = audioVolume;
+  audioSfx.currentTime = 0;
+  audioSfx.play().catch(() => {});
 
   playMusic();
 }
@@ -254,9 +267,26 @@ function revealCharacter(playerSlot) {
 }
 
 // --- Match Starting ---
+let marqueeInterval = null;
+let marqueeToggle = false;
+const MARQUEE_TEXTS = [
+  "Match Starting Soon",
+  "This event is sponsored by GmanSir\u2122"
+];
+
 function showMatchStarting() {
   const marquee = document.getElementById("match-starting");
   marquee.classList.remove("hidden");
+
+  const textEl = marquee.querySelector(".marquee-text");
+  marqueeToggle = false;
+  textEl.textContent = MARQUEE_TEXTS[0];
+
+  if (marqueeInterval) clearInterval(marqueeInterval);
+  marqueeInterval = setInterval(() => {
+    marqueeToggle = !marqueeToggle;
+    textEl.textContent = MARQUEE_TEXTS[marqueeToggle ? 1 : 0];
+  }, 8000);
 }
 
 // --- Fade to Black ---
@@ -272,6 +302,12 @@ function fadeToBlack() {
 function resetOverlay() {
   stopMusic();
   hideAllScenes();
+
+  // Clear marquee interval
+  if (marqueeInterval) {
+    clearInterval(marqueeInterval);
+    marqueeInterval = null;
+  }
 
   // Reset fade
   const fadeEl = document.getElementById("fade-overlay");
@@ -365,6 +401,7 @@ broadcast.on("AUDIO_VOLUME", (data) => {
 broadcast.on("AUDIO_MUTE", (data) => {
   audioMusic.muted = data.muted;
   audioVoice.muted = data.muted;
+  audioSfx.muted = data.muted;
 });
 
 // --- Notify control panel that overlay is ready ---
