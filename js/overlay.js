@@ -11,6 +11,13 @@ const audioMusic = document.getElementById("audio-music");
 const audioVoice = document.getElementById("audio-voice");
 const audioSfx = document.getElementById("audio-sfx");
 
+function playSfx(path) {
+  audioSfx.src = path;
+  audioSfx.volume = audioVolume;
+  audioSfx.currentTime = 0;
+  audioSfx.play().catch(() => {});
+}
+
 function setVolume(vol) {
   audioVolume = vol;
   audioMusic.volume = vol;
@@ -153,6 +160,7 @@ function buildStatsScene() {
 function showStats() {
   buildStatsScene();
   showScene("scene-stats");
+  playSfx("assets/audio/Show Match Stats SFX.mp3");
   playMusic();
 }
 
@@ -175,6 +183,7 @@ function showBanSelecting() {
   void banSelecting.offsetWidth;
   banSelecting.classList.remove("hidden");
 
+  playSfx("assets/audio/Board Ban Pick Selecting... SFX.mp3");
   playMusic();
 }
 
@@ -196,6 +205,7 @@ function showPickSelecting() {
   void pickSelecting.offsetWidth;
   pickSelecting.classList.remove("hidden");
 
+  playSfx("assets/audio/Board Ban Pick Selecting... SFX.mp3");
   playMusic();
 }
 
@@ -215,11 +225,7 @@ function showBoardBan() {
   void banReveal.offsetWidth;
   banReveal.classList.remove("hidden");
 
-  // Play board ban sound effect
-  audioSfx.src = "assets/audio/Board Ban Sound.mp3";
-  audioSfx.volume = audioVolume;
-  audioSfx.currentTime = 0;
-  audioSfx.play().catch(() => {});
+  playSfx("assets/audio/Reveal Banned Board SFX.mp3");
 
   playMusic();
 }
@@ -241,11 +247,7 @@ function showBoardPick() {
   void pickReveal.offsetWidth;
   pickReveal.classList.remove("hidden");
 
-  // Play board pick sound effect
-  audioSfx.src = "assets/audio/Board Pick Sound.mp3";
-  audioSfx.volume = audioVolume;
-  audioSfx.currentTime = 0;
-  audioSfx.play().catch(() => {});
+  playSfx("assets/audio/Reveal Picked Board SFX.mp3");
 
   playMusic();
 }
@@ -278,6 +280,7 @@ function showCharSelecting(playerSlot) {
   statusEl.textContent = "Selecting Character...";
   statusEl.className = "char-status selecting";
 
+  playSfx("assets/audio/Character Selecting.mp3");
   playMusic();
 }
 
@@ -300,6 +303,9 @@ function revealCharacter(playerSlot) {
 
   const slotEl = document.getElementById(`char-slot-${playerSlot}`);
   slotEl.classList.remove("active");
+
+  // Play reveal SFX
+  playSfx("assets/audio/Reveal Character SFX.mp3");
 
   // Play character voice line
   const voicePath = getCharacterVoicePath(matchData.game, player.character.id);
