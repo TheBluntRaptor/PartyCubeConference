@@ -398,6 +398,7 @@ broadcast.on("SHOW_ALL_STATS", (data) => {
 broadcast.on("SET_MATCH_DATA", (data) => {
   matchData = data;
   setGameTheme(matchData.game);
+  showScene("scene-ready");
   console.log("Match data received:", matchData);
 });
 

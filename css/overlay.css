@@ -192,6 +192,16 @@ body {
   }
 }
 
+/* Ready scene: center title */
+#scene-ready {
+  justify-content: center;
+  padding-top: 0;
+}
+
+.ready-header {
+  margin-bottom: 0;
+}
+
 /* All-stats scene: smaller title + tighter header */
 #scene-stats-all .scene-title {
   max-width: 400px;
